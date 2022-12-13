@@ -1,6 +1,5 @@
 import 'package:awesome_marathon_image/config/routes/app_pages.dart';
 import 'package:awesome_marathon_image/pages/auth/controller/register_controller.dart';
-import 'package:awesome_marathon_image/pages/auth/views/login_screen.dart';
 import 'package:awesome_marathon_image/utils/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -146,10 +145,9 @@ class RegisterScreen extends GetView<RegisterController> {
                     SizedBox(
                       width: double.infinity,
                       child: TextButton(
-                          onPressed: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreen())),
+                          onPressed: () => Get.offAndToNamed(
+                                Routes.LOGIN,
+                              ),
                           child: const Text('Login')),
                     )
                   ],

@@ -3,8 +3,10 @@ import 'package:awesome_marathon_image/pages/home/controller/home_controller.dar
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends GetView<HomeController> {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   // Future<void> logout() async {
   //   await _apiClient.logout(widget.accesstoken);
@@ -43,7 +45,43 @@ class HomeScreen extends GetView<HomeController> {
       initialIndex: 0,
       length: 2,
       child: Scaffold(
+        key: scaffoldKey,
+        drawer: Drawer(
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Text('Drawer Header'),
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.home,
+                ),
+                title: const Text('Page 1'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: const Icon(
+                  Icons.train,
+                ),
+                title: const Text('Page 2'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
+          leading: IconButton(icon: const Icon(Icons.menu), onPressed: () {
+            scaffoldKey.currentState?.openDrawer();
+          },),
           title: const Text('Awesome Marathon'),
           bottom: const TabBar(
             tabs: <Widget>[
@@ -135,35 +173,38 @@ class HomeScreen extends GetView<HomeController> {
   Widget _buildImagesGrid(List<String> images) {
     return Obx(
       () => Expanded(
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisSpacing: 0,
-            mainAxisSpacing: 0,
-            crossAxisCount: 3,
-          ),
-          itemCount: images.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                Get.toNamed(
-                  Routes.IMAGE_DETAIL,
-                  arguments: {
-                    'imageUrl': images[index],
-                    'imageId': controller.getImageId(images[index])
-                  },
-                );
-              },
-              child: Container(
-                margin: const EdgeInsets.all(5),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(images[index]),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisSpacing: 0,
+              mainAxisSpacing: 0,
+              crossAxisCount: 3,
+            ),
+            itemCount: images.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  Get.toNamed(
+                    Routes.IMAGE_DETAIL,
+                    arguments: {
+                      'imageUrl': images[index],
+                      'imageId': controller.getImageId(images[index])
+                    },
+                  );
+                },
+                child: Container(
+                  margin: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(images[index]),
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
