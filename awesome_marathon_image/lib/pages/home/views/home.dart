@@ -20,7 +20,6 @@ class HomeScreen extends GetView<HomeController> {
       ));
       return;
     }
-    Get.printInfo(info: controller.getImagesByBib(bibCode).toString());
     return controller.getImagesByBib(bibCode);
   }
 
@@ -33,7 +32,6 @@ class HomeScreen extends GetView<HomeController> {
       ));
       return;
     }
-    Get.printInfo(info: controller.getImagesByName(name).toString());
     return controller.getImagesByName(name);
   }
 
@@ -41,11 +39,11 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return DefaultTabController(
-      initialIndex: 1,
+      initialIndex: 0,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('TabBar Widget'),
+          title: const Text('Awesome Marathon'),
           bottom: const TabBar(
             tabs: <Widget>[
               Tab(
@@ -62,23 +60,27 @@ class HomeScreen extends GetView<HomeController> {
             Container(
               height: size.height * 0.8,
               padding: const EdgeInsets.all(12),
-              child: Stack(
+              child: Column(
                 children: [
                   _buildSearchButton(
-                      controller: controller.nameController,
-                      onSearch: getImagesByName),
+                    controller: controller.nameController,
+                    onSearch: getImagesByName,
+                  ),
+                  _buildImagesGrid(controller.nameImages),
                 ],
               ),
             ),
             Container(
               height: size.height * 0.8,
               padding: const EdgeInsets.all(12),
-              child: Stack(
+              child: Column(
                 children: [
                   _buildSearchButton(
-                      controller: controller.bibCodeController,
-                      onSearch: getImagesByBib,
-                      hintText: 'Enter Your Bib Code'),
+                    controller: controller.bibCodeController,
+                    onSearch: getImagesByBib,
+                    hintText: 'Enter Your Bib Code',
+                  ),
+                  _buildImagesGrid(controller.bibImages),
                 ],
               ),
             ),
@@ -126,6 +128,44 @@ class HomeScreen extends GetView<HomeController> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildImagesGrid(List<String> images) {
+    return Obx(
+      () => Expanded(
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisSpacing: 0,
+            mainAxisSpacing: 0,
+            crossAxisCount: 3,
+          ),
+          itemCount: images.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => RouteTwo(
+                //         image: _items[index].image,
+                //         name: _items[index].name),
+                //   ),
+                // );
+              },
+              child: Container(
+                margin: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(images[index]),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

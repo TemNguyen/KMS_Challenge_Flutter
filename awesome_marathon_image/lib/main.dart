@@ -1,5 +1,4 @@
 import 'package:awesome_marathon_image/config/routes/app_pages.dart';
-import 'package:awesome_marathon_image/pages/auth/views/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 

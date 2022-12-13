@@ -5,11 +5,21 @@ class HomeRepository {
 
   HomeRepository(this._apiClient);
 
-  Future<dynamic> getImagesByBib(String bibCode) {
-    return _apiClient.getImagesByBib(bibCode: bibCode);
+  Future<List<String>> getImagesByBib(String bibCode) async {
+    List<String> bibImages = [];
+    var result = await _apiClient.getImagesByBib(bibCode: bibCode);
+    if (result['data'] != null) {
+      bibImages = List.from(result['data']);
+    }
+    return bibImages;
   }
 
-  Future<dynamic> getImagesByName(String name) {
-    return _apiClient.getImagesByName(data: name);
+  Future<List<String>> getImagesByName(String name) async {
+    List<String> images = [];
+    var result = await _apiClient.getImagesByName(data: name);
+    if (result['data'] != null) {
+      images = List.from(result['data']);
+    }
+    return images;
   }
 }

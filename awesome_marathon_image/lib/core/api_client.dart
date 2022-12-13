@@ -78,7 +78,6 @@ class ApiClient {
         'https://picturesfinder.live/api/v1/image/get_images_by_bibCode?bibCode=$bibCode',
         data: '',
       );
-      print(response.data.toString());
       return response.data;
     } on DioError catch (e) {
       return e.response!.data;
@@ -93,7 +92,6 @@ class ApiClient {
         'https://picturesfinder.live/api/v1/image/get_image_urls',
         data: data,
       );
-      print(response.data.toString());
       return response.data;
     } on DioError catch (e) {
       return e.response!.data;

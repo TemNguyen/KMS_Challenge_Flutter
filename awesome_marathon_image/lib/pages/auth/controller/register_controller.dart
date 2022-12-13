@@ -10,10 +10,19 @@ class RegisterController extends GetxController {
   final TextEditingController fullnameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  
+
   final showPassword = true.obs;
 
+  @override
+  void onClose() {
+    fullnameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.onClose();
+  }
+
   Future<dynamic> register() {
-    return _repository.register(emailController.text, passwordController.text, fullnameController.text);
+    return _repository.register(
+        emailController.text, passwordController.text, fullnameController.text);
   }
 }

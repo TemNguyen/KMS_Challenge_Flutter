@@ -18,15 +18,19 @@ class RegisterScreen extends GetView<RegisterController> {
           message: '${res['message']}',
           backgroundColor: const Color.fromRGBO(3, 167, 55, 1),
         ));
-        Get.toNamed(Routes.LOGIN);
+        Get.offAndToNamed(
+          Routes.LOGIN,
+          arguments: {
+            "email": controller.emailController.text,
+            "fullName": controller.fullnameController.text
+          },
+        );
       } else {
         Get.showSnackbar(GetSnackBar(
           message: '${res['message']}',
           backgroundColor: const Color.fromRGBO(207, 27, 36, 1),
         ));
       }
-        Get.closeAllSnackbars();
-
     }
   }
 
