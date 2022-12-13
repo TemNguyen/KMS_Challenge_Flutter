@@ -5,6 +5,8 @@ import 'package:awesome_marathon_image/pages/auth/views/login_screen.dart';
 import 'package:awesome_marathon_image/pages/auth/views/register_screen.dart';
 import 'package:awesome_marathon_image/pages/home/binding/home_binding.dart';
 import 'package:awesome_marathon_image/pages/home/views/home.dart';
+import 'package:awesome_marathon_image/pages/image_detail/binding/image_detail_binding.dart';
+import 'package:awesome_marathon_image/pages/image_detail/view/image_detail_view.dart';
 import 'package:get/get.dart';
 part 'app_routes.dart';
 
@@ -28,6 +30,11 @@ class AppPages {
       page: () => const RegisterScreen(),
       binding: AuthBinding(),
       transition: Transition.downToUp,
+    ),
+    GetPage(
+      name: Routes.IMAGE_DETAIL,
+      page: () => ImageDetailPage(),
+      binding: ImageDetailBinding(),
     ),
   ];
 }

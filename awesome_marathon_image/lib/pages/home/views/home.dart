@@ -1,3 +1,4 @@
+import 'package:awesome_marathon_image/config/routes/app_pages.dart';
 import 'package:awesome_marathon_image/pages/home/controller/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -144,14 +145,13 @@ class HomeScreen extends GetView<HomeController> {
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => RouteTwo(
-                //         image: _items[index].image,
-                //         name: _items[index].name),
-                //   ),
-                // );
+                Get.toNamed(
+                  Routes.IMAGE_DETAIL,
+                  arguments: {
+                    'imageUrl': images[index],
+                    'imageId': controller.getImageId(images[index])
+                  },
+                );
               },
               child: Container(
                 margin: const EdgeInsets.all(5),
